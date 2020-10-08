@@ -25,14 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        int[] btnID = {R.id.clean ,R.id.brackets ,R.id.quotient ,R.id.division,
-//                R.id.seven ,R.id.eight ,R.id.nine ,R.id.multi,
-//                R.id.four ,R.id.five ,R.id.six ,R.id.sub ,
-//                R.id.one ,R.id.two ,R.id.three ,R.id.plus,
-//                R.id.plusorminus ,R.id.zero ,R.id.dot ,R.id.equals};
-//        for (int id:btnID){
-//            ((Button) findViewById(id)).setOnClickListener(this);
-//        }
 
         clean = (Button) findViewById(R.id.clean);
         brackets = (Button) findViewById(R.id.brackets);
@@ -234,8 +226,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.plusorminus:
                 break;
             case R.id.zero:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "0";
+                showNumber += "0";
+                showNumber();
                 break;
             case R.id.dot:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += ".";
+                showNumber += ".";
+                showNumber();
                 break;
             case R.id.equals:
                 if (numTemp.length() != 0) {
@@ -248,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         numbers.clear();
                         showNumber = "";
                         numTemp = "";
+                        display1.setText("");
                     } else {
                         display1.setText("請選擇數字");
                     }
@@ -325,12 +330,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return temp;
     }
     public String operatordiv(String i1, String i2){
-        String temp;
-        BigDecimal temp1, temp2;
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.divide(temp2)).toString();
-        return temp;
+        temp = temp1.divide(temp2, 10, BigDecimal.ROUND_HALF_UP);
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.intValue());
+        } else {
+            return String.valueOf(temp);
+        }
+
     }
 
     public void showNumber(){
