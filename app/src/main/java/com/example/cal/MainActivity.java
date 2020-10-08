@@ -83,8 +83,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 display1.setText("");
                 break;
             case R.id.brackets:
+                
                 break;
             case R.id.quotient:
+                if(!numTemp.equals("")){
+                    double tmp = Double.parseDouble(numTemp);
+                    tmp = tmp / 100;
+                    numTemp = String.valueOf(tmp);
+                    numbers.add(numTemp);
+                    showNumber += "%";
+                    showNumber();
+                }
                 break;
             case R.id.division:
                 if (!numTemp.equals("") ) {
@@ -228,10 +237,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.zero:
                 if (numbers.size() != 0)
                     if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
-                numTemp += "0";
-                showNumber += "0";
-                showNumber();
+                        numbers.remove(numbers.size() - 1);numTemp += "0";
+                if (!numTemp.equals("")) {
+                    numTemp += "0";
+                    showNumber += "0";
+                    showNumber();
+                }
                 break;
             case R.id.dot:
                 if (numbers.size() != 0)
@@ -306,28 +317,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             display.setText(numbers.get(0));
     }
     public String operatorPlus(String i1, String i2){
-        String temp;
-        BigDecimal temp1, temp2;
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.add(temp2)).toString();
-        return temp;
+        temp = (temp1.add(temp2));
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.intValue());
+        } else {
+            return String.valueOf(temp);
+        }
     }
     public String operatorsub(String i1, String i2){
-        String temp;
-        BigDecimal temp1, temp2;
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.subtract(temp2)).toString();
-        return temp;
+        temp = (temp1.subtract(temp2));
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.intValue());
+        } else {
+            return String.valueOf(temp);
+        }
     }
     public String operatormulti(String i1, String i2){
-        String temp;
-        BigDecimal temp1, temp2;
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.multiply(temp2)).toString();
-        return temp;
+        temp = temp1.multiply(temp2);
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.intValue());
+        } else {
+            return String.valueOf(temp);
+        }
     }
     public String operatordiv(String i1, String i2){
         BigDecimal temp, temp1, temp2;
