@@ -88,102 +88,147 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showNumber = "";
                 numTemp = "";
                 display.setText(String.valueOf(0));
+                display1.setText("");
                 break;
             case R.id.brackets:
                 break;
             case R.id.quotient:
                 break;
             case R.id.division:
-                if(numbers.get(numbers.size()-1).equals(",")) {
-                    numbers.set(numbers.size()-2, "÷");
-                    showNumber.substring(0, showNumber.length()-1);
-                    showNumber += "÷";
-                    showNumber();
-                }
-                if (numTemp.length() != 0) {
+                if (!numTemp.equals("") ) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "÷";
                     numbers.add("÷");
                     numbers.add(",");
                     showNumber();
+                } else if (numbers.get(numbers.size() - 1).equals(",")){
+                    numbers.set(numbers.size() - 2, "÷");
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    showNumber += "÷";
+                    showNumber();
                 }
                 break;
             case R.id.seven:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "7";
+                showNumber += "7";
+                showNumber();
                 break;
             case R.id.eight:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "8";
+                showNumber += "8";
+                showNumber();
                 break;
             case R.id.nine:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "9";
+                showNumber += "9";
+                showNumber();
                 break;
             case R.id.multi:
-                if(numbers.get(numbers.size()-1).equals(",")) {
-                    numbers.set(numbers.size() - 2, "×");
-                    showNumber.substring(0, showNumber.length()-1);
-                    showNumber += "×";
-                    showNumber();
-                }
-                if (numTemp.length() != 0) {
+                if (!numTemp.equals("") ) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "×";
                     numbers.add("×");
                     numbers.add(",");
                     showNumber();
+                } else if (numbers.get(numbers.size() - 1).equals(",")){
+                    numbers.set(numbers.size() - 2, "×");
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    showNumber += "×";
+                    showNumber();
+                }
+                break;
+            case R.id.four:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "4";
+                showNumber += "4";
+                showNumber();
+                break;
+            case R.id.five:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "5";
+                showNumber += "5";
+                showNumber();
+                break;
+            case R.id.six:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
+                numTemp += "6";
+                showNumber += "6";
+                showNumber();
+                break;
+            case R.id.sub:
+                if (!numTemp.equals("") ) {
+                    numbers.add(numTemp);
+                    numTemp = "";
+                    showNumber += "－";
+                    numbers.add("－");
+                    numbers.add(",");
+                    showNumber();
+                } else if (numbers.get(numbers.size() - 1).equals(",")){
+                    numbers.set(numbers.size() - 2, "－");
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    showNumber += "－";
+                    showNumber();
                 }
 
                 break;
-            case R.id.four:
-                break;
-            case R.id.five:
-                break;
-            case R.id.six:
-                break;
-            case R.id.sub:
-                if (numTemp.length() != 0) {
-                    numbers.add(numTemp);
-                    numTemp = "";
-                    numbers.add(",");
-                }
-                if (numbers.size() != 0) {
-                    if(numbers.get(numbers.size()-1).equals(",")){
-                        numbers.remove(numbers.size()-1);
-                        showNumber += "－";
-                        numbers.add("－");
-                        showNumber();
-                    }
-                }
-                break;
             case R.id.one:
                 if (numbers.size() != 0)
-                    if(numbers.get(numbers.size()-1).equals(","))
-                        numbers.remove(numbers.size()-1);
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
                 numTemp += "1";
                 showNumber += "1";
                 showNumber();
                 break;
             case R.id.two:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
                 numTemp += "2";
                 showNumber += "2";
                 showNumber();
                 break;
             case R.id.three:
+                if (numbers.size() != 0)
+                    if (numbers.get(numbers.size() - 1).equals(","))
+                        numbers.remove(numbers.size() - 1);
                 numTemp += "3";
                 showNumber += "3";
                 showNumber();
                 break;
             case R.id.plus:
-                if (numTemp.length() != 0) {
+                if (!numTemp.equals("") ) {
                     numbers.add(numTemp);
                     numTemp = "";
+                    showNumber += "+";
+                    numbers.add("+");
                     numbers.add(",");
-                }
-                if (numbers.size() != 0) {
-                    if(numbers.get(numbers.size()-1).equals(",")){
-                        numbers.remove(numbers.size()-1);
+                    showNumber();
+                } else if (numbers.size() != 0) {
+                    if (numbers.get(numbers.size() - 1).equals(",")){
+                        numbers.set(numbers.size() - 2, "+");
+                        showNumber = showNumber.substring(0, showNumber.length() - 1);
                         showNumber += "+";
-                        numbers.add("+");
                         showNumber();
                     }
+                } else {
+                    display1.setText("請選取數字");
                 }
                 break;
             case R.id.plusorminus:
@@ -197,10 +242,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     numbers.add(numTemp);
                     numTemp = "";
                 }
-                calculation();
-                numbers.clear();
-                showNumber = "";
-                numTemp = "";
+                if (numbers.size() != 0){
+                    if (!numbers.get(numbers.size() - 1).equals(",")) {
+                        calculation();
+                        numbers.clear();
+                        showNumber = "";
+                        numTemp = "";
+                    } else {
+                        display1.setText("請選擇數字");
+                    }
+
+                }
+                break;
         }
     }
     public void calculation (){
