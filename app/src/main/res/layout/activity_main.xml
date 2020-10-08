@@ -229,5 +229,4 @@
             android:textSize="50sp"
             android:text="@string/equals"/>
     </LinearLayout>
-
 </LinearLayout>

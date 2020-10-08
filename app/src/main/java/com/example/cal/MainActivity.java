@@ -341,10 +341,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             return String.valueOf(temp);
         }
-
     }
     public void showNumber(){
         display.setText(showNumber);
     }
-
 }
