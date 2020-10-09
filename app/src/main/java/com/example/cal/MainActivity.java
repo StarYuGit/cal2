@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 display1.setText("");
                 break;
             case R.id.brackets:
-                
                 break;
             case R.id.quotient:
                 if(!numTemp.equals("")){
@@ -111,25 +110,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.seven:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "7";
                 showNumber += "7";
                 showNumber();
                 break;
             case R.id.eight:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "8";
                 showNumber += "8";
                 showNumber();
                 break;
             case R.id.nine:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "9";
                 showNumber += "9";
                 showNumber();
@@ -150,25 +152,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.four:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "4";
                 showNumber += "4";
                 showNumber();
                 break;
             case R.id.five:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "5";
                 showNumber += "5";
                 showNumber();
                 break;
             case R.id.six:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "6";
                 showNumber += "6";
                 showNumber();
@@ -190,25 +195,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.one:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "1";
                 showNumber += "1";
                 showNumber();
                 break;
             case R.id.two:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "2";
                 showNumber += "2";
                 showNumber();
                 break;
             case R.id.three:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += "3";
                 showNumber += "3";
                 showNumber();
@@ -235,19 +243,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.plusorminus:
                 break;
             case R.id.zero:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);numTemp += "0";
-                if (!numTemp.equals("")) {
+                        numbers.remove(numbers.size() - 1);
+                }
+                if (!numTemp.equals("")){
                     numTemp += "0";
                     showNumber += "0";
                     showNumber();
                 }
                 break;
             case R.id.dot:
-                if (numbers.size() != 0)
+                if (numbers.size() != 0){
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
+                }
                 numTemp += ".";
                 showNumber += ".";
                 showNumber();
@@ -259,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (numbers.size() != 0){
                     if (!numbers.get(numbers.size() - 1).equals(",")) {
-                        calculation();
+                        display.setText(calculation(numbers));
                         numbers.clear();
                         showNumber = "";
                         numTemp = "";
@@ -272,56 +282,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-    public void calculation (){
-        while(numbers.contains("×")) {
-            for (int i = 0; i < numbers.size(); i++) {
-                if (numbers.get(i).equals("×")) {
-                    numbers.set(i - 1, operatormulti(numbers.get(i - 1), numbers.get(i + 1)));
-                    display.setText(numbers.get(i - 1));
-                    numbers.remove(i + 1);
-                    numbers.remove(i);
+    public String calculation (ArrayList num){
+        while(num.contains("×")) {
+            for (int i = 0; i < num.size(); i++) {
+                if (num.get(i).equals("×")) {
+                    num.set(i - 1, operatormulti(num.get(i - 1).toString(), num.get(i + 1).toString()));
+                    display.setText(num.get(i - 1).toString());
+                    num.remove(i + 1);
+                    num.remove(i);
                 }
             }
         }
         while(numbers.contains("÷")) {
-            for (int i = 0; i < numbers.size(); i++) {
-                if (numbers.get(i).equals("÷")) {
-                    numbers.set(i - 1, operatordiv(numbers.get(i - 1), numbers.get(i + 1)));
-                    display.setText(numbers.get(i - 1));
-                    numbers.remove(i + 1);
-                    numbers.remove(i);
+            for (int i = 0; i < num.size(); i++) {
+                if (num.get(i).equals("÷")) {
+                    num.set(i - 1, operatordiv(num.get(i - 1).toString(), num.get(i + 1).toString()));
+                    display.setText(num.get(i - 1).toString());
+                    num.remove(i + 1);
+                    num.remove(i);
                 }
             }
         }
         while(numbers.contains("+")) {
-            for (int i = 0; i < numbers.size(); i++) {
-                if (numbers.get(i).equals("+")) {
-                    numbers.set(i - 1, operatorPlus(numbers.get(i - 1), numbers.get(i + 1)));
-                    display.setText(numbers.get(i - 1));
-                    numbers.remove(i + 1);
-                    numbers.remove(i);
+            for (int i = 0; i < num.size(); i++) {
+                if (num.get(i).equals("+")) {
+                    num.set(i - 1, operatorPlus(num.get(i - 1).toString(), num.get(i + 1).toString()));
+                    display.setText(num.get(i - 1).toString());
+                    num.remove(i + 1);
+                    num.remove(i);
                 }
             }
         }
         while(numbers.contains("－")) {
-            for (int i = 0; i < numbers.size(); i++) {
-                if (numbers.get(i).equals("－")){
-                    numbers.set(i-1, operatorsub(numbers.get(i-1), numbers.get(i+1)));
-                    display.setText(numbers.get(i-1));
-                    numbers.remove(i+1);
-                    numbers.remove(i);
+            for (int i = 0; i < num.size(); i++) {
+                if (num.get(i).equals("－")){
+                    num.set(i-1, operatorsub(num.get(i-1).toString(), num.get(i+1).toString()));
+                    display.setText(num.get(i-1).toString());
+                    num.remove(i+1);
+                    num.remove(i);
                 }
             }
         }
-        if(numbers.size() == 1)
-            display.setText(numbers.get(0));
+        return num.get(0).toString();
+    }
+    public String operatormulti(String i1, String i2){
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
+        temp1 = new BigDecimal(i1);
+        temp2 = new BigDecimal(i2);
+        temp = temp1.multiply(temp2).stripTrailingZeros();
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.doubleValue());
+        } else {
+            return String.valueOf(temp);
+        }
+    }
+    public String operatordiv(String i1, String i2){
+        BigDecimal temp, temp1, temp2;
+        BigDecimal[] tp;
+        temp1 = new BigDecimal(i1);
+        temp2 = new BigDecimal(i2);
+        temp = temp1.divide(temp2, 10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
+        if (tp[1].doubleValue() == 0.0){
+            return String.valueOf(temp.intValue());
+        } else {
+            return String.valueOf(temp);
+        }
     }
     public String operatorPlus(String i1, String i2){
         BigDecimal temp, temp1, temp2;
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.add(temp2));
+        temp = temp1.add(temp2).stripTrailingZeros();
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
             return String.valueOf(temp.intValue());
@@ -334,33 +369,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = (temp1.subtract(temp2));
-        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
-        if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.intValue());
-        } else {
-            return String.valueOf(temp);
-        }
-    }
-    public String operatormulti(String i1, String i2){
-        BigDecimal temp, temp1, temp2;
-        BigDecimal[] tp;
-        temp1 = new BigDecimal(i1);
-        temp2 = new BigDecimal(i2);
-        temp = temp1.multiply(temp2);
-        tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
-        if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.intValue());
-        } else {
-            return String.valueOf(temp);
-        }
-    }
-    public String operatordiv(String i1, String i2){
-        BigDecimal temp, temp1, temp2;
-        BigDecimal[] tp;
-        temp1 = new BigDecimal(i1);
-        temp2 = new BigDecimal(i2);
-        temp = temp1.divide(temp2, 10, BigDecimal.ROUND_HALF_UP);
+        temp = temp1.subtract(temp2).stripTrailingZeros();
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
             return String.valueOf(temp.intValue());
