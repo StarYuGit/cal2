@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             one, two, three, plus,
             plusorminus, zero, dot, equals;
     TextView display,display1;
-    String numTemp="",showNumber="";
+    String numTemp="#",showNumber="";
     ArrayList<String> numbers = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,35 +78,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.clean:
                 numbers.clear();
                 showNumber = "";
-                numTemp = "";
+                numTemp = "#";
                 display.setText(String.valueOf(0));
                 display1.setText("");
                 break;
             case R.id.brackets:
+                
                 break;
             case R.id.quotient:
-                if(!numTemp.equals("")){
+                if(!numTemp.equals("#")){
                     double tmp = Double.parseDouble(numTemp);
                     tmp = tmp / 100;
                     numTemp = String.valueOf(tmp);
-                    numbers.add(numTemp);
                     showNumber += "%";
                     showNumber();
                 }
                 break;
             case R.id.division:
-                if (!numTemp.equals("") ) {
+                if (!numTemp.equals("#") ) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "÷";
                     numbers.add("÷");
                     numbers.add(",");
                     showNumber();
-                } else if (numbers.get(numbers.size() - 1).equals(",")){
-                    numbers.set(numbers.size() - 2, "÷");
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    showNumber += "÷";
-                    showNumber();
+                } else if (numbers.size() != 0) {
+                    if (numbers.get(numbers.size() - 1).equals(",")){
+                        numbers.set(numbers.size() - 2, "÷");
+                        showNumber = showNumber.substring(0, showNumber.length() - 1);
+                        showNumber += "÷";
+                        showNumber();
+                    }
+                } else {
+                    display1.setText("請選取數字");
                 }
                 break;
             case R.id.seven:
@@ -114,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "7";
                 showNumber += "7";
                 showNumber();
@@ -123,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "8";
                 showNumber += "8";
                 showNumber();
@@ -132,23 +140,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "9";
                 showNumber += "9";
                 showNumber();
                 break;
             case R.id.multi:
-                if (!numTemp.equals("") ) {
+                if (!numTemp.equals("#")) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "×";
                     numbers.add("×");
                     numbers.add(",");
                     showNumber();
-                } else if (numbers.get(numbers.size() - 1).equals(",")){
-                    numbers.set(numbers.size() - 2, "×");
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    showNumber += "×";
-                    showNumber();
+                } else if (numbers.size() != 0) {
+                    if (numbers.get(numbers.size() - 1).equals(",")){
+                        numbers.set(numbers.size() - 2, "×");
+                        showNumber = showNumber.substring(0, showNumber.length() - 1);
+                        showNumber += "×";
+                        showNumber();
+                    }
+                }  else {
+                    display1.setText("請選取數字");
                 }
                 break;
             case R.id.four:
@@ -156,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "4";
                 showNumber += "4";
                 showNumber();
@@ -165,6 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "5";
                 showNumber += "5";
                 showNumber();
@@ -174,23 +192,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "6";
                 showNumber += "6";
                 showNumber();
                 break;
             case R.id.sub:
-                if (!numTemp.equals("") ) {
+                if (!numTemp.equals("#") ) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "－";
                     numbers.add("－");
                     numbers.add(",");
                     showNumber();
-                } else if (numbers.get(numbers.size() - 1).equals(",")){
-                    numbers.set(numbers.size() - 2, "－");
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    showNumber += "－";
-                    showNumber();
+                } else if (numbers.size() != 0) {
+                    if (numbers.get(numbers.size() - 1).equals(",")) {
+                        numbers.set(numbers.size() - 2, "－");
+                        showNumber = showNumber.substring(0, showNumber.length() - 1);
+                        showNumber += "－";
+                        showNumber();
+                    }
+                } else {
+                    display1.setText("請選取數字");
                 }
 
                 break;
@@ -199,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "1";
                 showNumber += "1";
                 showNumber();
@@ -208,6 +234,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "2";
                 showNumber += "2";
                 showNumber();
@@ -217,12 +245,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
+                if (numTemp.equals("#"))
+                    numTemp = "";
                 numTemp += "3";
                 showNumber += "3";
                 showNumber();
                 break;
             case R.id.plus:
-                if (!numTemp.equals("") ) {
+                if (!numTemp.equals("#") ) {
                     numbers.add(numTemp);
                     numTemp = "";
                     showNumber += "+";
@@ -247,7 +277,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
-                if (!numTemp.equals("")){
+                if (numTemp.equals("#")) {
+                    numTemp = "";
+                }
+                if (!numTemp.equals("#")){
                     numTemp += "0";
                     showNumber += "0";
                     showNumber();
@@ -258,9 +291,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (numbers.get(numbers.size() - 1).equals(","))
                         numbers.remove(numbers.size() - 1);
                 }
-                numTemp += ".";
-                showNumber += ".";
-                showNumber();
+                if (numTemp.equals("#")) {
+                    numTemp = "";
+                }
+                if (numTemp == "") {
+                    numTemp += "0.";
+                    showNumber += "0.";
+                    showNumber();
+                } else {
+                    numTemp += ".";
+                    showNumber += ".";
+                    showNumber();
+                }
                 break;
             case R.id.equals:
                 if (numTemp.length() != 0) {
@@ -272,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         display.setText(calculation(numbers));
                         numbers.clear();
                         showNumber = "";
-                        numTemp = "";
+                        numTemp = "#";
                         display1.setText("");
                     } else {
                         display1.setText("請選擇數字");
@@ -330,10 +372,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = temp1.multiply(temp2).stripTrailingZeros();
+        temp = temp1.multiply(temp2);
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.doubleValue());
+            return temp.stripTrailingZeros().toPlainString();
         } else {
             return String.valueOf(temp);
         }
@@ -343,10 +385,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = temp1.divide(temp2, 10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        temp = temp1.divide(temp2, 10, BigDecimal.ROUND_HALF_UP);
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.intValue());
+            return temp.stripTrailingZeros().toPlainString();
         } else {
             return String.valueOf(temp);
         }
@@ -356,10 +398,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = temp1.add(temp2).stripTrailingZeros();
+        temp = temp1.add(temp2);
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.intValue());
+            return temp.stripTrailingZeros().toPlainString();
         } else {
             return String.valueOf(temp);
         }
@@ -369,10 +411,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BigDecimal[] tp;
         temp1 = new BigDecimal(i1);
         temp2 = new BigDecimal(i2);
-        temp = temp1.subtract(temp2).stripTrailingZeros();
+        temp = temp1.subtract(temp2);
         tp = temp.divideAndRemainder(BigDecimal.valueOf(1));
         if (tp[1].doubleValue() == 0.0){
-            return String.valueOf(temp.intValue());
+            return temp.stripTrailingZeros().toPlainString();
         } else {
             return String.valueOf(temp);
         }
