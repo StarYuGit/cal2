@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (numTemp.equals("#"))
                     numTemp = "";
                 numTemp += "8";
-                showNumber += "8";
+                showNumber += "8"; 
                 showNumber();
                 break;
             case R.id.nine:
