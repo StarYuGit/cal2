@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         clean = (Button) findViewById(R.id.clean);
-        brackets = (Button) findViewById(R.id.brackets);
+        brackets = (Button) findViewById(R.id.brackets); 
         quotient = (Button) findViewById(R.id.quotient);
         division = (Button) findViewById(R.id.division);
         seven = (Button) findViewById(R.id.seven);
