@@ -18,58 +18,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             four, five, six, sub,
             one, two, three, plus,
             plusorminus, zero, dot, equals;
+
+    int bs_counter=0;
     TextView display,display1;
-    String numTemp="#",showNumber="";
+    String temp="#", number="", showNumber="";
     ArrayList<String> numbers = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        clean = (Button) findViewById(R.id.clean);
-        brackets = (Button) findViewById(R.id.brackets); 
-        quotient = (Button) findViewById(R.id.quotient);
-        division = (Button) findViewById(R.id.division);
-        seven = (Button) findViewById(R.id.seven);
-        eight = (Button) findViewById(R.id.eight);
-        nine = (Button) findViewById(R.id.nine);
-        multi = (Button) findViewById(R.id.multi);
-        four = (Button) findViewById(R.id.four);
-        five = (Button) findViewById(R.id.five);
-        six = (Button) findViewById(R.id.six);
-        sub = (Button) findViewById(R.id.sub);
-        one = (Button) findViewById(R.id.one);
-        two = (Button) findViewById(R.id.two);
-        three = (Button) findViewById(R.id.three);
-        plus = (Button) findViewById(R.id.plus);
-        plusorminus = (Button) findViewById(R.id.plusorminus);
-        zero = (Button) findViewById(R.id.zero);
-        dot = (Button) findViewById(R.id.dot);
-        equals = (Button) findViewById(R.id.equals);
-
-        display = (TextView) findViewById(R.id.display);
-        display1 = (TextView) findViewById(R.id.display1);
-
-        clean.setOnClickListener(this);
-        brackets.setOnClickListener(this);
-        quotient.setOnClickListener(this);
-        division.setOnClickListener(this);
-        seven.setOnClickListener(this);
-        eight.setOnClickListener(this);
-        nine.setOnClickListener(this);
-        multi.setOnClickListener(this);
-        four.setOnClickListener(this);
-        five.setOnClickListener(this);
-        six.setOnClickListener(this);
-        sub.setOnClickListener(this);
-        one.setOnClickListener(this);
-        two.setOnClickListener(this);
-        three.setOnClickListener(this);
-        plus.setOnClickListener(this);
-        plusorminus.setOnClickListener(this);
-        zero.setOnClickListener(this);
-        dot.setOnClickListener(this);
-        equals.setOnClickListener(this);
+        init();
     }
 
     @Override
@@ -78,250 +36,393 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.clean:
                 numbers.clear();
                 showNumber = "";
-                numTemp = "#";
+                number = "";
+                temp = "#";
+                bs_counter=0;
                 display.setText(String.valueOf(0));
                 display1.setText("");
                 break;
             case R.id.brackets:
-                
+                if(!temp.equals("")){
+                    if(temp.equals("#")){
+                        temp = "";
+                    } else {
+                        number += temp;
+                        temp = "";
+                    }
+                }
+                if(!number.equals("")){
+                    if (number.substring(number.length() - 1).equals("n")){
+                        if(bs_counter == 0){
+                            number += "×(";
+                            showNumber += "×(";
+                            bs_counter += 1;
+                        } else {
+                            number += ")";
+                            showNumber += ")";
+                            bs_counter -= 1;
+                        }
+                    } else if (number.substring(number.length() - 1).equals("(")){
+                        number += "(";
+                        showNumber += "(";
+                        bs_counter += 1;
+                    } else if (number.substring(number.length() - 1).equals(")")){
+                        if(bs_counter != 0){
+                            number += ")";
+                            showNumber += ")";
+                            bs_counter -= 1;
+                        } else {
+                            number += "×(";
+                            showNumber += "×(";
+                            bs_counter += 1;
+                        }
+                    } else if (number.substring(number.length() - 1).equals("o")){
+                        number += "(";
+                        showNumber += "(";
+                        bs_counter += 1;
+                    }
+                } else {
+                    temp = "";
+                    number += "(";
+                    showNumber += "(";
+                    bs_counter += 1;
+                }
+                showNumber();
                 break;
-            case R.id.quotient:
-                if(!numTemp.equals("#")){
-                    double tmp = Double.parseDouble(numTemp);
+            case R.id.quotient: // %
+                if (!temp.equals("#") ) {
+                    if (temp.substring(temp.length() - 1).equals(".")){
+                        temp += "%_";
+                        showNumber += "%";
+                        showNumber();
+                    }
+                }
+               /* if(!temp.equals("#")){
+                    double tmp = Double.parseDouble(temp);
                     tmp = tmp / 100;
-                    numTemp = String.valueOf(tmp);
+                    temp = String.valueOf(tmp);
                     showNumber += "%";
                     showNumber();
-                }
+                }*/
                 break;
-            case R.id.division:
-                if (!numTemp.equals("#") ) {
-                    numbers.add(numTemp);
-                    numTemp = "";
-                    showNumber += "÷";
-                    numbers.add("÷");
-                    numbers.add(",");
-                    showNumber();
-                } else if (numbers.size() != 0) {
-                    if (numbers.get(numbers.size() - 1).equals(",")){
-                        numbers.set(numbers.size() - 2, "÷");
+            case R.id.division: // "÷"
+                if(!temp.equals("#")){
+                    number += temp;
+                    temp = "";
+                }
+                if (!number.equals("")) {
+                    if (number.substring(number.length() - 1).equals("o")) {
+                        number = number.substring(0, number.length() - 2);
                         showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    }
+                    if (number.substring(number.length() - 1).equals("("))
+                        display1.setText("請輸入數字!");
+                    else {
+                        number += "÷o";
                         showNumber += "÷";
                         showNumber();
                     }
-                } else {
-                    display1.setText("請選取數字");
-                }
+                } else
+                    display1.setText("請輸入數字!");
                 break;
             case R.id.seven:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "7";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "7n";
                 showNumber += "7";
                 showNumber();
                 break;
             case R.id.eight:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "8";
-                showNumber += "8"; 
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "8n";
+                showNumber += "8";
                 showNumber();
                 break;
             case R.id.nine:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "9";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "9n";
                 showNumber += "9";
                 showNumber();
                 break;
-            case R.id.multi:
-                if (!numTemp.equals("#")) {
-                    numbers.add(numTemp);
-                    numTemp = "";
-                    showNumber += "×";
-                    numbers.add("×");
-                    numbers.add(",");
-                    showNumber();
-                } else if (numbers.size() != 0) {
-                    if (numbers.get(numbers.size() - 1).equals(",")){
-                        numbers.set(numbers.size() - 2, "×");
+            case R.id.multi: // "×"
+                if(!temp.equals("#")){
+                    number += temp;
+                    temp = "";
+                }
+                if (!number.equals("")) {
+                    if (number.substring(number.length() - 1).equals("o")) {
+                        number = number.substring(0, number.length() - 2);
                         showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    }
+                    if (number.substring(number.length() - 1).equals("("))
+                        display1.setText("請輸入數字!");
+                    else {
+                        number += "×o";
                         showNumber += "×";
                         showNumber();
                     }
-                }  else {
-                    display1.setText("請選取數字");
-                }
+                } else
+                    display1.setText("請輸入數字!");
                 break;
             case R.id.four:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "4";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "4n";
                 showNumber += "4";
                 showNumber();
                 break;
             case R.id.five:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "5";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "5n";
                 showNumber += "5";
                 showNumber();
                 break;
             case R.id.six:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "6";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "6n";
                 showNumber += "6";
                 showNumber();
                 break;
-            case R.id.sub:
-                if (!numTemp.equals("#") ) {
-                    numbers.add(numTemp);
-                    numTemp = "";
-                    showNumber += "－";
-                    numbers.add("－");
-                    numbers.add(",");
-                    showNumber();
-                } else if (numbers.size() != 0) {
-                    if (numbers.get(numbers.size() - 1).equals(",")) {
-                        numbers.set(numbers.size() - 2, "－");
+            case R.id.sub:// "－"
+                if(!temp.equals("#")){
+                    number += temp;
+                    temp = "";
+                }
+                if (!number.equals("")) {
+                    if (number.substring(number.length() - 1).equals("o")) {
+                        number = number.substring(0, number.length() - 2);
                         showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    }
+                    if (number.substring(number.length() - 1).equals("("))
+                        display1.setText("請輸入數字!");
+                    else {
+                        number += "－o";
                         showNumber += "－";
                         showNumber();
                     }
-                } else {
-                    display1.setText("請選取數字");
-                }
-
+                } else
+                    display1.setText("請輸入數字!");
                 break;
             case R.id.one:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "1";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "1n";
                 showNumber += "1";
                 showNumber();
                 break;
             case R.id.two:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "2";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "2n";
                 showNumber += "2";
                 showNumber();
                 break;
             case R.id.three:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
-                if (numTemp.equals("#"))
-                    numTemp = "";
-                numTemp += "3";
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){
+                        temp = temp.substring(0, temp.length() - 1);
+                    }
+                }
+                if (!temp.equals("")){ //如果前方是%
+                    if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                temp += "3n";
                 showNumber += "3";
                 showNumber();
                 break;
-            case R.id.plus:
-                if (!numTemp.equals("#") ) {
-                    numbers.add(numTemp);
-                    numTemp = "";
-                    showNumber += "+";
-                    numbers.add("+");
-                    numbers.add(",");
-                    showNumber();
-                } else if (numbers.size() != 0) {
-                    if (numbers.get(numbers.size() - 1).equals(",")){
-                        numbers.set(numbers.size() - 2, "+");
+            case R.id.plus:// "+"
+                if(!temp.equals("#")){
+                    number += temp;
+                    temp = "";
+                }
+                if (!number.equals("")) {
+                    if (number.substring(number.length() - 1).equals("o")) {
+                        number = number.substring(0, number.length() - 2);
                         showNumber = showNumber.substring(0, showNumber.length() - 1);
+                    }
+                    if (number.substring(number.length() - 1).equals("("))
+                        display1.setText("請輸入數字!");
+                    else {
+                        number += "+o";
                         showNumber += "+";
                         showNumber();
                     }
-                } else {
-                    display1.setText("請選取數字");
-                }
+                } else
+                    display1.setText("請輸入數字!");
                 break;
             case R.id.plusorminus:
                 break;
             case R.id.zero:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
-                }
-                if (numTemp.equals("#")) {
-                    numTemp = "";
-                }
-                if (!numTemp.equals("#")){
-                    numTemp += "0";
+                if (!temp.equals("#")) { //如果是變數沒有使用過
+                    if (!temp.equals("")){ //如果前方是n
+                        if (temp.substring(temp.length()-1).equals("n")){
+                            temp = temp.substring(0, temp.length() - 1);
+                        }
+                    }
+                    if (!temp.equals("")){ //如果前方是%
+                        if (temp.substring(temp.length()-1).equals("_")){
+                            temp += "×o";
+                            showNumber += "×";
+                        }
+                    }
+                    temp += "0n";
                     showNumber += "0";
                     showNumber();
+                } else {
+                    display1.setText("請輸入數字!");
                 }
                 break;
             case R.id.dot:
-                if (numbers.size() != 0){
-                    if (numbers.get(numbers.size() - 1).equals(","))
-                        numbers.remove(numbers.size() - 1);
-                }
-                if (numTemp.equals("#")) {
-                    numTemp = "";
-                }
-                if (numTemp == "") {
-                    numTemp += "0.";
+                if (temp.equals("#") ) {
+                    temp = "";
+                    temp += "0.";
                     showNumber += "0.";
                     showNumber();
                 } else {
-                    numTemp += ".";
+                    temp += ".";
                     showNumber += ".";
                     showNumber();
                 }
                 break;
             case R.id.equals:
-                if (numTemp.length() != 0) {
-                    numbers.add(numTemp);
-                    numTemp = "";
+                if (!temp.equals("#")) {
+                    number += temp;
+                    temp = "";
+                } else {
+                    display1.setText("請選擇數字");
                 }
-                if (numbers.size() != 0){
+                if (numbers.size() != 0) {
                     if (!numbers.get(numbers.size() - 1).equals(",")) {
                         display.setText(calculation(numbers));
                         numbers.clear();
                         showNumber = "";
-                        numTemp = "#";
+                        temp = "#";
                         display1.setText("");
-                    } else {
-                        display1.setText("請選擇數字");
-                    }
 
+                    }
                 }
                 break;
+        }
+    }
+    int first, last;
+    public String chk_word(String str){
+        if(str.contains("(")){
+            first = str.indexOf("(")+1;
+            if(str.contains(")")){
+                last = str.indexOf(")");
+            } else {
+                last = str.length();
+            }
+            str = str.substring(first, last);
+            return chk_word(str);
+        } else {
+            return str;
         }
     }
     public String calculation (ArrayList num){
@@ -338,7 +439,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         while(numbers.contains("÷")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("÷")) {
-                    num.set(i - 1, operatordiv(num.get(i - 1).toString(), num.get(i + 1).toString()));
+                    num.set(i - 1,  operatordiv(num.get(i - 1).toString(), num.get(i + 1).toString()));
                     display.setText(num.get(i - 1).toString());
                     num.remove(i + 1);
                     num.remove(i);
@@ -367,6 +468,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return num.get(0).toString();
     }
+
+
     public String operatormulti(String i1, String i2){
         BigDecimal temp, temp1, temp2;
         BigDecimal[] tp;
@@ -420,6 +523,130 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void showNumber(){
+        display1.setText(number+temp);
         display.setText(showNumber);
     }
+    public void init(){
+        clean = (Button) findViewById(R.id.clean);
+        brackets = (Button) findViewById(R.id.brackets);
+        quotient = (Button) findViewById(R.id.quotient);
+        division = (Button) findViewById(R.id.division);
+        seven = (Button) findViewById(R.id.seven);
+        eight = (Button) findViewById(R.id.eight);
+        nine = (Button) findViewById(R.id.nine);
+        multi = (Button) findViewById(R.id.multi);
+        four = (Button) findViewById(R.id.four);
+        five = (Button) findViewById(R.id.five);
+        six = (Button) findViewById(R.id.six);
+        sub = (Button) findViewById(R.id.sub);
+        one = (Button) findViewById(R.id.one);
+        two = (Button) findViewById(R.id.two);
+        three = (Button) findViewById(R.id.three);
+        plus = (Button) findViewById(R.id.plus);
+        plusorminus = (Button) findViewById(R.id.plusorminus);
+        zero = (Button) findViewById(R.id.zero);
+        dot = (Button) findViewById(R.id.dot);
+        equals = (Button) findViewById(R.id.equals);
+
+        display = (TextView) findViewById(R.id.display);
+        display1 = (TextView) findViewById(R.id.display1);
+
+        clean.setOnClickListener(this);
+        brackets.setOnClickListener(this);
+        quotient.setOnClickListener(this);
+        division.setOnClickListener(this);
+        seven.setOnClickListener(this);
+        eight.setOnClickListener(this);
+        nine.setOnClickListener(this);
+        multi.setOnClickListener(this);
+        four.setOnClickListener(this);
+        five.setOnClickListener(this);
+        six.setOnClickListener(this);
+        sub.setOnClickListener(this);
+        one.setOnClickListener(this);
+        two.setOnClickListener(this);
+        three.setOnClickListener(this);
+        plus.setOnClickListener(this);
+        plusorminus.setOnClickListener(this);
+        zero.setOnClickListener(this);
+        dot.setOnClickListener(this);
+        equals.setOnClickListener(this);
+    }
 }
+/*public class MainActivity extends AppCompatActivity {//split
+    TextView txv1, txv2, txv3, txv4;
+    Button btn;
+    String str = "70nxo80nxo30nxo30n", temp2="",temp3="";
+    String[] temp;
+    List<String> num;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        txv1 = (TextView) findViewById(R.id.txv1);
+        txv2 = (TextView) findViewById(R.id.txv2);
+        txv3 = (TextView) findViewById(R.id.txv3);
+        txv4 = (TextView) findViewById(R.id.txv4);
+        btn =  (Button) findViewById(R.id.btn);
+    }
+    public void test(View v){
+        temp = str.split("[no]");
+        for(String n:temp){
+            temp2 += n;
+        }
+        num = Arrays.asList(temp);
+        for(int i=0;i< num.size();i++) {
+            temp3 += num.get(i);
+        }
+
+        txv1.setText(str);
+        txv2.setText(temp2);
+        txv3.setText(temp3);
+
+
+    }*/
+
+/*
+public class MainActivity extends AppCompatActivity {// test_temp
+    TextView txv1, txv2, txv3, txv4, txv5, txv6, txv7;
+    Button btn;
+    //String str = "(70x((80))x((30*20)x30)";
+    StringBuilder str1 = new StringBuilder("(70x((80))x((30*20)x30)");
+    int first, last;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        txv1 = (TextView) findViewById(R.id.txv1);
+        txv2 = (TextView) findViewById(R.id.txv2);
+        txv3 = (TextView) findViewById(R.id.txv3);
+        txv4 = (TextView) findViewById(R.id.txv4);
+        txv5 = (TextView) findViewById(R.id.txv5);
+        txv6 = (TextView) findViewById(R.id.txv6);
+        txv7 = (TextView) findViewById(R.id.txv7);
+        btn =  (Button) findViewById(R.id.btn);
+    }
+    public void test(View v){
+        txv1.setText(str1);
+        txv2.setText(chk_word(str1));
+        txv3.setText(String.valueOf(str1.indexOf(chk_word(str1).toString())));
+        txv4.setText(String.valueOf(str1.indexOf("30*20")));
+
+    }
+    public StringBuilder chk_word(StringBuilder str){
+        if(str.indexOf("(")!= -1){
+            first = str.indexOf("(")+1;
+            if(str.indexOf(")") != -1){
+                last = str.indexOf(")");
+            } else {
+                last = str.length();
+            }
+            str = new StringBuilder (str.substring(first, last));
+            return chk_word(str);
+        } else {
+            return str;
+        }
+    }
+}*/
