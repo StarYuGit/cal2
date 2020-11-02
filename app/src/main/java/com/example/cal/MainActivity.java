@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView display,display1;
     String temp="#", number="", showNumber="";
     ArrayList<String> numbers = new ArrayList<String>();
+    StringBuilder num_string, num_temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -400,17 +401,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display1.setText("請選擇數字");
                 }
                 if (numbers.size() != 0) {
-                    if (!numbers.get(numbers.size() - 1).equals(",")) {
-                        display.setText(calculation(numbers));
-                        numbers.clear();
-                        showNumber = "";
-                        temp = "#";
-                        display1.setText("");
-
-                    }
+                    display.setText(calculation(number));
+                    numbers.clear();
+                    showNumber = "";
+                    temp = "#";
+                    display1.setText("");
                 }
                 break;
         }
+    }
+    public String calculation () {
+        num_string = new StringBuilder(number);
+        num_temp = chk_word(num_string);
+
     }
     int first, last;
     public StringBuilder chk_word(StringBuilder str){
@@ -427,7 +430,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return str;
         }
     }
-    public String calculation (ArrayList num){
+
+
+    public String judgment (ArrayList num){
         while(num.contains("×")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("×")) {
@@ -470,7 +475,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return num.get(0).toString();
     }
-
 
     public String operatormulti(String i1, String i2){
         BigDecimal temp, temp1, temp2;
@@ -524,6 +528,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
+    public ArrayList<String> strip_to_arraylist(String str) {
+        String[] temp;
+        temp = "n|o|_".split(str);
+        List<String> numlist = Arrays.asList(temp);
+        return new ArrayList<String>(numlist);
+    }
     public void showNumber(){
         display1.setText(number+temp);
         display.setText(showNumber);
@@ -573,12 +583,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         zero.setOnClickListener(this);
         dot.setOnClickListener(this);
         equals.setOnClickListener(this);
-    }
-    public ArrayList<String> strip_to_arraylist(String str) {
-        String[] temp;
-        temp = "n|o|_".split(str);
-        List<String> numlist = Arrays.asList(temp);
-        return new ArrayList<String>(numlist);
     }
 
 }
