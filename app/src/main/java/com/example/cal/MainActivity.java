@@ -11,6 +11,8 @@ import android.widget.TextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button clean, brackets, quotient, division,
@@ -411,15 +413,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     int first, last;
-    public String chk_word(String str){
-        if(str.contains("(")){
+    public StringBuilder chk_word(StringBuilder str){
+        if(str.indexOf("(")!= -1){
             first = str.indexOf("(")+1;
-            if(str.contains(")")){
+            if(str.indexOf(")") != -1){
                 last = str.indexOf(")");
             } else {
                 last = str.length();
             }
-            str = str.substring(first, last);
+            str = new StringBuilder (str.substring(first, last));
             return chk_word(str);
         } else {
             return str;
@@ -572,40 +574,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dot.setOnClickListener(this);
         equals.setOnClickListener(this);
     }
-}
-/*public class MainActivity extends AppCompatActivity {//split
-    TextView txv1, txv2, txv3, txv4;
-    Button btn;
-    String str = "70nxo80nxo30nxo30n", temp2="",temp3="";
-    String[] temp;
-    List<String> num;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        txv1 = (TextView) findViewById(R.id.txv1);
-        txv2 = (TextView) findViewById(R.id.txv2);
-        txv3 = (TextView) findViewById(R.id.txv3);
-        txv4 = (TextView) findViewById(R.id.txv4);
-        btn =  (Button) findViewById(R.id.btn);
+    public ArrayList<String> strip_to_arraylist(String str) {
+        String[] temp;
+        temp = "n|o|_".split(str);
+        List<String> numlist = Arrays.asList(temp);
+        return new ArrayList<String>(numlist);
     }
-    public void test(View v){
-        temp = str.split("[no]");
-        for(String n:temp){
-            temp2 += n;
-        }
-        num = Arrays.asList(temp);
-        for(int i=0;i< num.size();i++) {
-            temp3 += num.get(i);
-        }
 
-        txv1.setText(str);
-        txv2.setText(temp2);
-        txv3.setText(temp3);
-
-
-    }*/
+}
 
 /*
 public class MainActivity extends AppCompatActivity {// test_temp
