@@ -22,10 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             plusorminus, zero, dot, equals;
 
     int bs_counter=0;
-    TextView display,display1;
-    String temp="#", number="", showNumber="";
-    ArrayList<String> numbers = new ArrayList<String>();
-    StringBuilder num_string, num_temp;
+    TextView display, display1;
+    TextView display2, display3;
+    String temp="#",temp2="" , number="", showNumber="", one_result;
+    String old_number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.clean:
-                numbers.clear();
                 showNumber = "";
                 number = "";
                 temp = "#";
@@ -94,19 +94,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.quotient: // %
                 if (!temp.equals("#") ) {
-                    if (temp.substring(temp.length() - 1).equals(".")){
+                    if (temp.substring(temp.length() - 1).equals("n")){
                         temp += "%_";
                         showNumber += "%";
                         showNumber();
                     }
                 }
-               /* if(!temp.equals("#")){
-                    double tmp = Double.parseDouble(temp);
-                    tmp = tmp / 100;
-                    temp = String.valueOf(tmp);
-                    showNumber += "%";
-                    showNumber();
-                }*/
                 break;
             case R.id.division: // "÷"
                 if(!temp.equals("#")){
@@ -132,17 +125,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "7n";
                 showNumber += "7";
                 showNumber();
@@ -151,17 +156,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "8n";
                 showNumber += "8";
                 showNumber();
@@ -170,17 +187,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "9n";
                 showNumber += "9";
                 showNumber();
@@ -209,17 +238,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "4n";
                 showNumber += "4";
                 showNumber();
@@ -228,17 +269,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "5n";
                 showNumber += "5";
                 showNumber();
@@ -247,17 +300,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "6n";
                 showNumber += "6";
                 showNumber();
@@ -286,17 +351,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "1n";
                 showNumber += "1";
                 showNumber();
@@ -305,17 +382,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "2n";
                 showNumber += "2";
                 showNumber();
@@ -324,17 +413,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
                 }
+                if(temp.equals("0n")){
+                    temp = "";
+                    showNumber = showNumber.substring(0, showNumber.length() - 1);
+                }
                 if (!temp.equals("")){ //如果前方是n
                     if (temp.substring(temp.length()-1).equals("n")){
                         temp = temp.substring(0, temp.length() - 1);
-                    }
-                }
-                if (!temp.equals("")){ //如果前方是%
-                    if (temp.substring(temp.length()-1).equals("_")){
+                    } else if (temp.substring(temp.length()-1).equals("_")){
                         temp += "×o";
                         showNumber += "×";
+                        number += temp;
+                        temp = "";
                     }
                 }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+
                 temp += "3n";
                 showNumber += "3";
                 showNumber();
@@ -360,26 +461,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display1.setText("請輸入數字!");
                 break;
             case R.id.plusorminus:
+                if(temp2.equals("")){
+                    temp2 = "(-";
+                    temp = "";
+                } else {
+                    temp2 = "";
+                    temp = "#";
+                }
+                showNumber();
                 break;
             case R.id.zero:
-                if (!temp.equals("#")) { //如果是變數沒有使用過
-                    if (!temp.equals("")){ //如果前方是n
-                        if (temp.substring(temp.length()-1).equals("n")){
-                            temp = temp.substring(0, temp.length() - 1);
-                        }
-                    }
-                    if (!temp.equals("")){ //如果前方是%
-                        if (temp.substring(temp.length()-1).equals("_")){
-                            temp += "×o";
-                            showNumber += "×";
-                        }
-                    }
-                    temp += "0n";
-                    showNumber += "0";
-                    showNumber();
-                } else {
-                    display1.setText("請輸入數字!");
+                if (temp.equals("#")) { //如果是變數沒有使用過
+                    temp = "";
                 }
+                if (!temp.equals("")){ //如果前方是n
+                    if (temp.substring(temp.length()-1).equals("n")){ //如果前方是n
+                        temp = temp.substring(0, temp.length() - 1);
+                    } else if (temp.substring(temp.length()-1).equals("_")){
+                        temp += "×o";
+                        showNumber += "×";
+                    }
+                }
+                if (!number.equals("")){
+                    if (number.substring(number.length()-1).equals(")")){
+                        temp += "×o";
+                        showNumber += "×";
+                        number += temp;
+                        temp = "";
+                    }
+                }
+                temp += "0n";
+                showNumber += "0";
+                showNumber();
                 break;
             case R.id.dot:
                 if (temp.equals("#") ) {
@@ -397,84 +510,92 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!temp.equals("#")) {
                     number += temp;
                     temp = "";
+                }
+                if(!number.equals("")) {
+                    while(number.contains("(")&&number.contains(")")){
+                        old_number = calculation(strip_to_arraylist(chk_word(number)));
+                        number = number.replace(one_result, old_number);
+                    }
+                    display1.setText(calculation(strip_to_arraylist(number)));
                 } else {
                     display1.setText("請選擇數字");
-                }
-                if (numbers.size() != 0) {
-                    display.setText(calculation(number));
-                    numbers.clear();
-                    showNumber = "";
-                    temp = "#";
-                    display1.setText("");
                 }
                 break;
         }
     }
-    public String calculation () {
-        num_string = new StringBuilder(number);
-        num_temp = chk_word(num_string);
-
-    }
     int first, last;
-    public StringBuilder chk_word(StringBuilder str){
-        if(str.indexOf("(")!= -1){
-            first = str.indexOf("(")+1;
-            if(str.indexOf(")") != -1){
+    public String chk_word(String str){
+        if(str.contains("(")){
+            first = str.indexOf("(");
+            if(str.contains(")")){
                 last = str.indexOf(")");
             } else {
                 last = str.length();
             }
-            str = new StringBuilder (str.substring(first, last));
+            one_result = str.substring(first, last +1);
+            str = str.substring(first+1, last+1);
             return chk_word(str);
         } else {
+            str = str.substring(0, str.length()-1);
             return str;
         }
     }
-
-
-    public String judgment (ArrayList num){
+    public ArrayList<String> strip_to_arraylist(String str) {
+        String[] temp;
+        temp = str.split("n|o|_");
+        List<String> numlist = Arrays.asList(temp);
+        return new ArrayList<String>(numlist);
+    }
+    public String calculation (ArrayList num){
+        while(num.contains("%")){
+             for (int i = 0;i < num.size();i++){
+                 if (num.get(i).equals("%")) {
+                     double tmp = Double.parseDouble(num.get(i-1).toString());
+                     tmp = tmp / 100;
+                     num.set(i - 1, tmp);
+                     num.remove(i);
+                 }
+             }
+        }
         while(num.contains("×")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("×")) {
                     num.set(i - 1, operatormulti(num.get(i - 1).toString(), num.get(i + 1).toString()));
-                    display.setText(num.get(i - 1).toString());
                     num.remove(i + 1);
                     num.remove(i);
                 }
             }
         }
-        while(numbers.contains("÷")) {
+        while(num.contains("÷")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("÷")) {
                     num.set(i - 1,  operatordiv(num.get(i - 1).toString(), num.get(i + 1).toString()));
-                    display.setText(num.get(i - 1).toString());
                     num.remove(i + 1);
                     num.remove(i);
                 }
             }
         }
-        while(numbers.contains("+")) {
+        while(num.contains("+")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("+")) {
                     num.set(i - 1, operatorPlus(num.get(i - 1).toString(), num.get(i + 1).toString()));
-                    display.setText(num.get(i - 1).toString());
                     num.remove(i + 1);
                     num.remove(i);
                 }
             }
         }
-        while(numbers.contains("－")) {
+        while(num.contains("－")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("－")){
                     num.set(i-1, operatorsub(num.get(i-1).toString(), num.get(i+1).toString()));
-                    display.setText(num.get(i-1).toString());
                     num.remove(i+1);
                     num.remove(i);
                 }
             }
         }
-        return num.get(0).toString();
+        return num.get(0).toString() +"n";
     }
+
 
     public String operatormulti(String i1, String i2){
         BigDecimal temp, temp1, temp2;
@@ -528,15 +649,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
-    public ArrayList<String> strip_to_arraylist(String str) {
-        String[] temp;
-        temp = "n|o|_".split(str);
-        List<String> numlist = Arrays.asList(temp);
-        return new ArrayList<String>(numlist);
-    }
     public void showNumber(){
-        display1.setText(number+temp);
+        display1.setText(String.format("%s%s%s", number, temp2, temp));
         display.setText(showNumber);
+        display2.setText(temp);
     }
     public void init(){
         clean = (Button) findViewById(R.id.clean);
@@ -562,6 +678,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         display = (TextView) findViewById(R.id.display);
         display1 = (TextView) findViewById(R.id.display1);
+        display2 = (TextView) findViewById(R.id.display2);
+        //display3 = (TextView) findViewById(R.id.display3);
 
         clean.setOnClickListener(this);
         brackets.setOnClickListener(this);
@@ -585,48 +703,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         equals.setOnClickListener(this);
     }
 
+
 }
-
-/*
-public class MainActivity extends AppCompatActivity {// test_temp
-    TextView txv1, txv2, txv3, txv4, txv5, txv6, txv7;
-    Button btn;
-    //String str = "(70x((80))x((30*20)x30)";
-    StringBuilder str1 = new StringBuilder("(70x((80))x((30*20)x30)");
-    int first, last;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        txv1 = (TextView) findViewById(R.id.txv1);
-        txv2 = (TextView) findViewById(R.id.txv2);
-        txv3 = (TextView) findViewById(R.id.txv3);
-        txv4 = (TextView) findViewById(R.id.txv4);
-        txv5 = (TextView) findViewById(R.id.txv5);
-        txv6 = (TextView) findViewById(R.id.txv6);
-        txv7 = (TextView) findViewById(R.id.txv7);
-        btn =  (Button) findViewById(R.id.btn);
-    }
-    public void test(View v){
-        txv1.setText(str1);
-        txv2.setText(chk_word(str1));
-        txv3.setText(String.valueOf(str1.indexOf(chk_word(str1).toString())));
-        txv4.setText(String.valueOf(str1.indexOf("30*20")));
-
-    }
-    public StringBuilder chk_word(StringBuilder str){
-        if(str.indexOf("(")!= -1){
-            first = str.indexOf("(")+1;
-            if(str.indexOf(")") != -1){
-                last = str.indexOf(")");
-            } else {
-                last = str.length();
-            }
-            str = new StringBuilder (str.substring(first, last));
-            return chk_word(str);
-        } else {
-            return str;
-        }
-    }
-}*/
