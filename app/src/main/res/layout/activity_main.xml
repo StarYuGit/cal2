@@ -22,10 +22,9 @@
             android:text="@string/zero"
             tools:ignore="NestedWeights,RtlHardcoded" />
         <TextView
-            android:id="@+id/display1"
+            android:id="@+id/display2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:textSize="40sp"
             android:layout_weight="1"
             android:text=""
@@ -38,20 +37,34 @@
         android:gravity="center"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/display2"
+            android:id="@+id/display3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="right"
-            android:textSize="47sp"
+            android:textSize="30sp"
             android:layout_weight="1"
             android:text="@string/zero"
             tools:ignore="NestedWeights,RtlHardcoded" />
         <TextView
-            android:id="@+id/display3"
+            android:id="@+id/display4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="right"
-            android:textSize="47sp"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:text="@string/zero"
+            tools:ignore="NestedWeights,RtlHardcoded" />
+        <TextView
+            android:id="@+id/display5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:text="@string/zero"
+            tools:ignore="NestedWeights,RtlHardcoded" />
+        <TextView
+            android:id="@+id/display6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textSize="30sp"
             android:layout_weight="1"
             android:text="@string/zero"
             tools:ignore="NestedWeights,RtlHardcoded" />
