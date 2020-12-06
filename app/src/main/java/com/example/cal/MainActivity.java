@@ -121,100 +121,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display2.setText("請輸入數字!");
                 break;
             case R.id.seven: // 7
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "7n";
-                show_temp += "7";
-                showNumber();
+                buttonswitch("7");
                 break;
             case R.id.eight: // 8
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "8n";
-                show_temp += "8";
-                showNumber();
+                buttonswitch("8");
                 break;
             case R.id.nine: // 9
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "9n";
-                show_temp += "9";
-                showNumber();
+                buttonswitch("9");
                 break;
             case R.id.multi: // "×"
                 temp_to_number();
@@ -238,99 +151,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display2.setText("請輸入數字!");
                 break;
             case R.id.four: // 4
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    } else if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                if (!number.equals("")){
-                    if (number.substring(number.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-
-                temp += "4n";
-                show_temp += "4";
-                showNumber();
+                buttonswitch("4");
                 break;
             case R.id.five: // 5
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "5n";
-                show_temp += "5";
-                showNumber();
+                buttonswitch("5");
                 break;
             case R.id.six: // 6
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "6n";
-                show_temp += "6";
-                showNumber();
+                buttonswitch("6");
                 break;
             case R.id.sub:// "－"
                 temp_to_number();
@@ -354,100 +181,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display2.setText("請輸入數字!");
                 break;
             case R.id.one: // 1
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "1n";
-                show_temp += "1";
-                showNumber();
+                buttonswitch("1");
                 break;
             case R.id.two: // 2
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "2n";
-                show_temp += "2";
-                showNumber();
+                buttonswitch("2");
                 break;
             case R.id.three: // 3
-                if (temp.equals("#")) { //如果是變數沒有使用過
-                    temp = "";
-                }
-                if(temp.equals("0n")){
-                    temp = "";
-                    showNumber = showNumber.substring(0, showNumber.length() - 1);
-                }
-                if(temp.equals("(")||temp.equals(")")){
-                    temp_to_number();
-                }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){
-                        temp = temp.substring(0, temp.length() - 1);
-                    }
-                    if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                    if (temp.substring(temp.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "3n";
-                show_temp += "3";
-                showNumber();
+                buttonswitch("3");
                 break;
             case R.id.plus: // "+"
                 temp_to_number();
@@ -705,6 +445,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
+    public void buttonswitch(String num){
+        if (temp.equals("#")) { //如果是變數沒有使用過
+            temp = "";
+        }
+        if(temp.equals("0n")){
+            temp = "";
+            showNumber = showNumber.substring(0, showNumber.length() - 1);
+        }
+        if(temp.equals("(")){
+            temp_to_number();
+        }
+        if (!temp.equals("")){ //如果前方是n
+            if (temp.substring(temp.length()-1).equals("n")){
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            if (temp.substring(temp.length()-1).equals("_")){
+                temp += "×o";
+                show_temp += "×";
+                number += temp;
+                temp = "";
+            }
+            if (temp.substring(temp.length()-1).equals(")")){
+                temp += "×o";
+                show_temp += "×";
+                number += temp;
+                temp = "";
+            }
+        }
+        temp += num;
+        temp += "n";
+        show_temp += num;
+        showNumber();
+    }
     public void showNumber(){
         display.setText(String.format("%s%s%s", showNumber, temp2, show_temp));
         display2.setText(String.format("%s%s%s", number, temp2, temp));
@@ -717,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void temp_to_number() {
         if (!temp.equals("#")) {
-            show_temp += show_temp;
+            showNumber += show_temp;
             show_temp = "";
             number += temp;
             temp = "";
