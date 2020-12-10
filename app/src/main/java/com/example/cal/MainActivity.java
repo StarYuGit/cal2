@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showNumber();
                 break;
             case R.id.quotient: // %
-                temp_to_number();
                 if (!temp.equals("#") ) {
                     if (temp.substring(temp.length() - 1).equals("n")){
                         temp += "%_";
@@ -101,114 +100,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.division: // "÷"
-                if(!temp.equals("#")){
-                    number += temp;
-                    temp = "";
-                }
-                if (!number.equals("")) {
-                    if (number.substring(number.length() - 1).equals("o")) {
-                        number = number.substring(0, number.length() - 2);
-                        showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    }
-                    if (number.substring(number.length() - 1).equals("("))
-                        display2.setText("請輸入數字!");
-                    else {
-                        number += "÷o";
-                        show_temp += "÷";
-                        showNumber();
-                    }
-                } else
-                    display2.setText("請輸入數字!");
+                button_operator("÷");
                 break;
             case R.id.seven: // 7
-                buttonswitch("7");
+                button_number("7");
                 break;
             case R.id.eight: // 8
-                buttonswitch("8");
+                button_number("8");
                 break;
             case R.id.nine: // 9
-                buttonswitch("9");
+                button_number("9");
                 break;
             case R.id.multi: // "×"
-                temp_to_number();
-                if(!temp.equals("#")){
-                    number += temp;
-                    temp = "";
-                }
-                if (!number.equals("")) {
-                    if (number.substring(number.length() - 1).equals("o")) {
-                        number = number.substring(0, number.length() - 2);
-                        showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    }
-                    if (number.substring(number.length() - 1).equals("("))
-                        display2.setText("請輸入數字!");
-                    else {
-                        number += "×o";
-                        show_temp += "×";
-                        showNumber();
-                    }
-                } else
-                    display2.setText("請輸入數字!");
+                button_operator("×");
                 break;
             case R.id.four: // 4
-                buttonswitch("4");
+                button_number("4");
                 break;
             case R.id.five: // 5
-                buttonswitch("5");
+                button_number("5");
                 break;
             case R.id.six: // 6
-                buttonswitch("6");
+                button_number("6");
                 break;
             case R.id.sub:// "－"
-                temp_to_number();
-                if(!temp.equals("#")){
-                    number += temp;
-                    temp = "";
-                }
-                if (!number.equals("")) {
-                    if (number.substring(number.length() - 1).equals("o")) {
-                        number = number.substring(0, number.length() - 2);
-                        showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    }
-                    if (number.substring(number.length() - 1).equals("("))
-                        display2.setText("請輸入數字!");
-                    else {
-                        number += "－o";
-                        show_temp += "－";
-                        showNumber();
-                    }
-                } else
-                    display2.setText("請輸入數字!");
+                button_operator("－");
                 break;
             case R.id.one: // 1
-                buttonswitch("1");
+                button_number("1");
                 break;
             case R.id.two: // 2
-                buttonswitch("2");
+                button_number("2");
                 break;
             case R.id.three: // 3
-                buttonswitch("3");
+                button_number("3");
                 break;
             case R.id.plus: // "+"
-                temp_to_number();
-                if(!temp.equals("#")){
-                    number += temp;
-                    temp = "";
-                }
-                if (!number.equals("")) {
-                    if (number.substring(number.length() - 1).equals("o")) {
-                        number = number.substring(0, number.length() - 2);
-                        showNumber = showNumber.substring(0, showNumber.length() - 1);
-                    }
-                    if (number.substring(number.length() - 1).equals("("))
-                        display2.setText("請輸入數字!");
-                    else {
-                        number += "+o";
-                        show_temp += "+";
-                        showNumber();
-                    }
-                } else
-                    display2.setText("請輸入數字!");
+                button_operator("+");
                 break;
             case R.id.plusorminus: // +-
                 if(temp.equals("#")){
@@ -235,30 +163,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.zero: // 0
                 if (temp.equals("#")) { //如果是變數沒有使用過
                     temp = "";
+                    temp += "0ns";
+                    show_temp += "0";
+                    showNumber();
                 }
-                if (!temp.equals("")){ //如果前方是n
-                    if (temp.substring(temp.length()-1).equals("n")){ //如果前方是n
-                        temp = temp.substring(0, temp.length() - 1);
-                    } else if (temp.substring(temp.length()-1).equals("_")){
-                        temp += "×o";
-                        show_temp += "×";
-                    }
-                }
-                if (!number.equals("")){
-                    if (number.substring(number.length()-1).equals(")")){
-                        temp += "×o";
-                        show_temp += "×";
-                        number += temp;
-                        temp = "";
-                    }
-                }
-                temp += "0n";
-                show_temp += "0";
-                showNumber();
+                if (!temp.equals("0ns"))
+                    button_number("0");
                 break;
             case R.id.dot: // .
-                if (temp.equals("#") ) {
+                if (temp.equals("0ns") ) {
                     temp = "";
+                    show_temp = "";
                     temp += "0.";
                     show_temp += "0.";
                     showNumber();
@@ -445,13 +360,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
-    public void buttonswitch(String num){
+    public void button_operator(String operator) {
+        temp_to_number();
+        if(!temp.equals("#")){
+            number += temp;
+            temp = "";
+        }
+        if (!number.equals("")) {
+            if (number.substring(number.length() - 1).equals("o")) {
+                number = number.substring(0, number.length() - 2);
+                showNumber = showNumber.substring(0, showNumber.length() - 1);
+            }
+            if (number.substring(number.length() - 1).equals("("))
+                display2.setText("請輸入數字!");
+            else {
+                temp += operator;
+                temp += "o";
+                show_temp += operator;
+                showNumber();
+            }
+        } else
+            display2.setText("請輸入數字!");
+    }
+    public void button_number(String num){
         if (temp.equals("#")) { //如果是變數沒有使用過
             temp = "";
         }
-        if(temp.equals("0n")){
+        if(temp.equals("0ns")){
             temp = "";
-            showNumber = showNumber.substring(0, showNumber.length() - 1);
+            show_temp = "";
         }
         if(temp.equals("(")){
             temp_to_number();
@@ -459,6 +396,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!temp.equals("")){ //如果前方是n
             if (temp.substring(temp.length()-1).equals("n")){
                 temp = temp.substring(0, temp.length() - 1);
+            }
+            if (temp.substring(temp.length()-1). equals("o")){
+                temp_to_number();
             }
             if (temp.substring(temp.length()-1).equals("_")){
                 temp += "×o";
@@ -483,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         display2.setText(String.format("%s%s%s", number, temp2, temp));
         display3.setText(String.format("number:%s", number));
         display4.setText(String.format("temp:%s", temp));
-        display5.setText(String.format("temp2:%s", temp2));
+        display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
         display6.setText(String.format("show:%s", showNumber));
 
 
@@ -500,6 +440,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         showNumber = "";
         show_temp = "";
         number = "";
+        show_temp = "";
         temp2 = "";
         temp = "#";
         bs_counter=0;
