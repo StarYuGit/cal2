@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
     Button clean, brackets, quotient, division,
             seven, eight, nine, multi,
             four, five, six, sub,
@@ -34,16 +34,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         init();
     }
-
+    @Override
+    public boolean onLongClick(View v) {
+        if(v.getId() == R.id.clean){
+            init_var();
+        }
+        return true;
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.clean: // C
-                init_var();
+                display2.setText("長按可清除");
+                temp_to_number();
+                number = del_str(number);
+                showNumber();
                 break;
             case R.id.brackets: // ()
-                number += temp2;
-                temp2 = "";
+                if(temp2.equals("(-")){
+                    number += temp2;
+                    showNumber += temp2;
+                    temp2 = "";
+                }
                 temp_to_number();
                 if(!temp.equals("")){
                     if(temp.equals("#")){
@@ -159,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 display.setText(String.format("%s%s%s", showNumber, temp2, temp));
+                display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
                 break;
             case R.id.zero: // 0
                 if (temp.equals("#")) { //如果是變數沒有使用過
@@ -202,7 +215,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         old_number = calculation(strip_to_arraylist(chk_word(number)));
                         number = number.replace(one_result, old_number);
                     }
-                    display.setText(calculation(strip_to_arraylist(number)));
+                    number = calculation(strip_to_arraylist(number));
+                    if(number.contains(".")){
+                        while (number.substring(number.length()-1).equals("0")){
+                            number = number.substring(0, number.length()-1);
+                        }
+                    }
+                    display.setText(number);
                     showNumber = "";
                     show_temp = "";
                     number = "";
@@ -212,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     display2.setText("");
                 } else {
                     display2.setText("請選擇數字");
-
                 }
                 break;
         }
@@ -361,11 +379,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void button_operator(String operator) {
+        if(temp2.equals("(-")){
+            number += temp2;
+            showNumber += temp2;
+            temp2 = "";
+        }
         temp_to_number();
         if(!temp.equals("#")){
             number += temp;
             temp = "";
         }
+
         if (!number.equals("")) {
             if (number.substring(number.length() - 1).equals("o")) {
                 number = number.substring(0, number.length() - 2);
@@ -383,34 +407,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             display2.setText("請輸入數字!");
     }
     public void button_number(String num){
-        if (temp.equals("#")) { //如果是變數沒有使用過
-            temp = "";
-        }
-        if(temp.equals("0ns")){
-            temp = "";
-            show_temp = "";
-        }
-        if(temp.equals("(")){
-            temp_to_number();
-        }
-        if (!temp.equals("")){ //如果前方是n
-            if (temp.substring(temp.length()-1).equals("n")){
-                temp = temp.substring(0, temp.length() - 1);
-            }
-            if (temp.substring(temp.length()-1). equals("o")){
-                temp_to_number();
-            }
-            if (temp.substring(temp.length()-1).equals("_")){
-                temp += "×o";
-                show_temp += "×";
-                number += temp;
-                temp = "";
-            }
-            if (temp.substring(temp.length()-1).equals(")")){
-                temp += "×o";
-                show_temp += "×";
-                number += temp;
-                temp = "";
+        if (!temp.equals("")){
+            switch (temp.substring(temp.length()-1)){
+                case "#":
+                    temp = "";
+                    break;
+                case "0ns":
+                    temp = "";
+                    show_temp = "";
+                    break;
+                case "(":
+                    temp_to_number();
+                    break;
+                case "n":
+                    temp = temp.substring(0, temp.length() - 1);
+                    break;
+                case "o":
+                    number += temp;
+                    showNumber += show_temp;
+                    show_temp = "";
+                    temp = "";
+                    break;
+                case "_":
+                case ")":
+                    temp += "×o";
+                    show_temp += "×";
+                    number += temp;
+                    temp = "";
+                    break;
             }
         }
         temp += num;
@@ -425,11 +449,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         display4.setText(String.format("temp:%s", temp));
         display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
         display6.setText(String.format("show:%s", showNumber));
+    }
+    public String del_str(String str){
+        char ch = str.substring(str.length()-1);
 
-
+        str = str.substring(0, str.length() - 1);
+        return str;
     }
     public void temp_to_number() {
         if (!temp.equals("#")) {
+            number += temp2;
+            temp2 = "";
             showNumber += show_temp;
             show_temp = "";
             number += temp;
@@ -496,5 +526,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         zero.setOnClickListener(this);
         dot.setOnClickListener(this);
         equals.setOnClickListener(this);
+        clean.setOnLongClickListener(this);
     }
+
+
 }
