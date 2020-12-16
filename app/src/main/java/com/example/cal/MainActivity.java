@@ -49,18 +49,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.clean: // C
-                if(!temp.equals("")) {
-                    display2.setText("長按可清除");
-                    showNumber = del_shownumber(showNumber);
-                    temp = del_number(temp);
-                    showNumber();
-                    if(temp.equals("")){
-                        delchar_temp = del_char(number);
-                        number = delchar_temp[0];
-                        temp = delchar_temp[1];
-                        showNumber();
-                    }
+                if(!show_temp.equals("")){
+                    showNumber += show_temp;
                 }
+                showNumber = del_shownumber(showNumber);
+                temp = del_number(temp);
+                display.setText(showNumber);
+                if(temp.equals("")){
+                    delchar_temp = del_char(number);
+                    number = delchar_temp[0];
+                    temp = delchar_temp[1];
+                    showNumber();
+                }
+
                 break;
             case R.id.brackets: // ()
                 if(temp2.equals("(-")){
@@ -403,25 +404,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
-    public String[] del_char(String str){
+    public String[] del_char(String str) {
         String[] temp;
+        String[] two_number = new String[2];
         String str_temp = "";
-        str = str.replace("o", "o,");
-        str = str.replace("n", "n,");
-        str = str.replace("_", "_,");
-        str = str.replace("(", ",(,");
-        str = str.replace(")", ",),");
-        temp = str.split(",");
+        if (!str.equals("")) {
+            if (str.contains("o"))
+                str = str.replace("o", "o,");
+            if (str.contains("n"))
+                str = str.replace("n", "n,");
+            if (str.contains("_"))
+                str = str.replace("_", "_,");
+            if (str.contains("("))
+                str = str.replace("(", ",(,");
+            if (str.contains(")"))
+                str = str.replace(")", ",),");
+            if (str.contains(",")) {
 
-        ArrayList<String> num = new ArrayList<String>(Arrays.asList(temp));
-        temp[1] = num.get(num.size()-1);
-        num.remove(num.size()-1);
-        for(String s:num){
-            str_temp += s;
+                temp = str.split(",");
+
+                ArrayList<String> num = new ArrayList<String>(Arrays.asList(temp));
+                two_number[1] = num.get(num.size() - 1);
+                num.remove(num.size() - 1);
+                for (String s : num) {
+                    str_temp += s;
+                }
+                two_number[0] = str_temp;
+            }
+            return two_number;
+        } else {
+            two_number[1] = "";
+            two_number[0] = "0";
+            return two_number;
         }
-        temp[0] = str_temp;
-        return temp;
     }
+
+
+
     public void button_operator(String operator) {
         if(temp2.equals("(-")){
             number += temp2;
