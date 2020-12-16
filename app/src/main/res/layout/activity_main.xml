@@ -16,7 +16,9 @@
             android:id="@+id/display"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="right|bottom"
+            android:maxLines="2"
+            android:scrollbars="vertical"
             android:textSize="47sp"
             android:layout_weight="1"
             android:text="@string/zero"
@@ -26,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="40sp"
-            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_weight="2"
             android:text=""
             tools:ignore="RtlHardcoded" />
     </LinearLayout>

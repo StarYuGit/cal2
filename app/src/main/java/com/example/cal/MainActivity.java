@@ -3,12 +3,11 @@ package com.example.cal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String temp="#",temp2="" , number="", one_result;
     String showNumber="", show_temp="";
     String old_number;
+    String[] delchar_temp = new String[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +36,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public boolean onLongClick(View v) {
-        if(v.getId() == R.id.clean){
-            init_var();
+        temp_to_number();
+        if(!number.equals("")){
+            if(v.getId() == R.id.clean){
+                init_var();
+            }
         }
+
         return true;
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.clean: // C
-                display2.setText("長按可清除");
-                temp_to_number();
-                number = del_str(number);
-                showNumber();
+                if(!temp.equals("")) {
+                    display2.setText("長按可清除");
+                    showNumber = del_shownumber(showNumber);
+                    temp = del_number(temp);
+                    showNumber();
+                    if(temp.equals("")){
+                        delchar_temp = del_char(number);
+                        number = delchar_temp[0];
+                        temp = delchar_temp[1];
+                        showNumber();
+                    }
+                }
                 break;
             case R.id.brackets: // ()
                 if(temp2.equals("(-")){
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(!number.equals("")){
                     if (number.substring(number.length() - 1).equals("n")){
                         if(bs_counter == 0){
-                            temp += "×(";
+                            temp += "×o(";
                             show_temp += "×(";
                             bs_counter += 1;
                         } else {
@@ -86,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             show_temp += ")";
                             bs_counter -= 1;
                         } else {
-                            temp += "×(";
+                            temp += "×o(";
                             show_temp += "×(";
                             bs_counter += 1;
                         }
@@ -103,9 +115,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showNumber();
                 break;
             case R.id.quotient: // %
-                if (!temp.equals("#") ) {
-                    if (temp.substring(temp.length() - 1).equals("n")){
-                        temp += "%_";
+                if (temp.equals("#")) {
+                    display2.setText("請輸入數字");
+                } else {
+                    if(!temp.equals("")){
+                        if (temp.substring(temp.length() - 1).equals("n")) {
+                            temp += "%_";
+                            show_temp += "%";
+                            showNumber();
+                        }
+                    }
+                }
+                if(temp.equals("")){
+                    if(!number.equals("")){
+                        number += "%_";
                         show_temp += "%";
                         showNumber();
                     }
@@ -201,37 +224,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.equals: // =
                 temp_to_number();
-                if(bs_counter != 0){
-                    number += temp;
-                    for (int i=0;i<bs_counter;i++){
-                        number += ")";
-                    }
-                }
                 if(!number.equals("")) {
-                    if (number.substring(number.length()-1).equals(".")){
-                        number = number.substring(0, number.length() - 1);
+                    switch (number.substring(number.length()-1)){
+                        case "o":
+                        case "(":
+                            display2.setText("請選擇數字");
+                            break;
+                        case ".":
+                            number = number.substring(0, number.length() - 1);
+                        default:
+                            if(bs_counter != 0){
+                                number += temp;
+                                for (int i=0;i<bs_counter;i++){
+                                    number += ")";
+                                }
+                            }
+                            while (number.contains("(") && number.contains(")")) {
+                                old_number = calculation(strip_to_arraylist(chk_word(number)));
+                                number = number.replace(one_result, old_number);
+                            }
+                            temp = calculation(strip_to_arraylist(number));
+                            if (temp.contains(".")) {
+                                while (temp.substring(temp.length() - 1).equals("0")) {
+                                    temp = temp.substring(0, temp.length() - 1);
+                                }
+                            }
+                            if (temp.substring(temp.length() - 1).equals("n"))
+                                showNumber = temp.substring(0, temp.length() - 1);
+                            display.setText(showNumber);
+                            display2.setText(temp);
+                            number = "";
+                            show_temp = "";
+                            temp2 = "";
+                            bs_counter = 0;
+                            break;
                     }
-                    while(number.contains("(")&&number.contains(")")){
-                        old_number = calculation(strip_to_arraylist(chk_word(number)));
-                        number = number.replace(one_result, old_number);
-                    }
-                    number = calculation(strip_to_arraylist(number));
-                    if(number.contains(".")){
-                        while (number.substring(number.length()-1).equals("0")){
-                            number = number.substring(0, number.length()-1);
-                        }
-                    }
-                    display.setText(number);
-                    showNumber = "";
-                    show_temp = "";
-                    number = "";
-                    temp2 = "";
-                    temp = "#";
-                    bs_counter=0;
-                    display2.setText("");
-                } else {
+                } else
                     display2.setText("請選擇數字");
-                }
                 break;
         }
     }
@@ -313,11 +342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        if (number.contains("(")){
-            return num.get(0).toString() +"n";
-        } else {
-            return num.get(0).toString();
-        }
+        return num.get(0).toString() +"n";
     }
     public String operatorplusorminus(String i2){
         BigDecimal temp, temp1, temp2;
@@ -378,6 +403,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return String.valueOf(temp);
         }
     }
+    public String[] del_char(String str){
+        String[] temp;
+        String str_temp = "";
+        str = str.replace("o", "o,");
+        str = str.replace("n", "n,");
+        str = str.replace("_", "_,");
+        str = str.replace("(", ",(,");
+        str = str.replace(")", ",),");
+        temp = str.split(",");
+
+        ArrayList<String> num = new ArrayList<String>(Arrays.asList(temp));
+        temp[1] = num.get(num.size()-1);
+        num.remove(num.size()-1);
+        for(String s:num){
+            str_temp += s;
+        }
+        temp[0] = str_temp;
+        return temp;
+    }
     public void button_operator(String operator) {
         if(temp2.equals("(-")){
             number += temp2;
@@ -407,6 +451,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             display2.setText("請輸入數字!");
     }
     public void button_number(String num){
+        int number_counter = 0;
+        display2.setText("");
         if (!temp.equals("")){
             switch (temp.substring(temp.length()-1)){
                 case "#":
@@ -440,30 +486,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temp += num;
         temp += "n";
         show_temp += num;
+        number_counter += 1;
         showNumber();
     }
     public void showNumber(){
         display.setText(String.format("%s%s%s", showNumber, temp2, show_temp));
+        int offset = display.getLineCount() * display.getLineHeight();
+        if(offset>display.getLineHeight()){
+            display.scrollTo(0, offset-display.getHeight());
+        }
         display2.setText(String.format("%s%s%s", number, temp2, temp));
         display3.setText(String.format("number:%s", number));
         display4.setText(String.format("temp:%s", temp));
         display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
         display6.setText(String.format("show:%s", showNumber));
     }
-    public String del_str(String str){
-        char ch = str.substring(str.length()-1);
-
-        str = str.substring(0, str.length() - 1);
+    public String del_shownumber(String str) {
+        if(!str.equals("")){
+            str = str.substring(0, str.length() - 1);
+            return str;
+        }
         return str;
+    }
+    public String del_number(String str) {
+        if(!str.equals("")){
+            switch (str.substring(str.length()-1)){
+                case "n":
+                    str = str.substring(0, str.length() - 2);
+                    /*if(str.length() == 0){
+                        break;
+                    }*/
+                    if(str.length()!=0){
+                        if (!str.substring((str.length() - 1)).equals("o")) {
+                            str += "n";
+                        }
+                    }
+
+                    break;
+                case "_":
+                case "-":
+                case "o":
+                    str = str.substring(0, str.length() - 2);
+                    break;
+                case "(":
+                    bs_counter -= 1;
+
+                case ")":
+                    str = str.substring(0, str.length() - 1);
+                    break;
+                case ".":
+                    str = str.substring(0, str.length() - 1);
+                    str += "n";
+                    break;
+            }
+            return str;
+        }
+        return "";
     }
     public void temp_to_number() {
         if (!temp.equals("#")) {
-            number += temp2;
-            temp2 = "";
-            showNumber += show_temp;
-            show_temp = "";
-            number += temp;
-            temp = "";
+            number += temp2;temp2 = "";
+            number += temp;temp = "";
+            showNumber += show_temp;show_temp = "";
         }
     }
     public void init_var(){
@@ -506,6 +590,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         display5 = (TextView) findViewById(R.id.display5);
         display6 = (TextView) findViewById(R.id.display6);
 
+
         clean.setOnClickListener(this);
         brackets.setOnClickListener(this);
         quotient.setOnClickListener(this);
@@ -527,6 +612,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dot.setOnClickListener(this);
         equals.setOnClickListener(this);
         clean.setOnLongClickListener(this);
+        display.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
 
