@@ -39,7 +39,7 @@
         android:layout_weight="2"
         android:gravity="center"
         android:orientation="vertical">
-        <TextView
+        <!--<TextView
             android:id="@+id/display3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -70,7 +70,7 @@
             android:textSize="30sp"
             android:layout_weight="1"
             android:text="@string/zero"
-            tools:ignore="NestedWeights,RtlHardcoded" />
+            tools:ignore="NestedWeights,RtlHardcoded" />-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

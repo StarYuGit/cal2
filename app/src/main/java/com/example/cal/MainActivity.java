@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 init_var();
             }
         }
-
         return true;
     }
     @Override
@@ -51,10 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.clean: // C
                 if(!show_temp.equals("")){
                     showNumber += show_temp;
+                    show_temp = "";
                 }
-                showNumber = del_shownumber(showNumber);
+                if(!showNumber.equals("0")){
+                    showNumber = del_shownumber(showNumber);
+                }
                 temp = del_number(temp);
                 display.setText(showNumber);
+                display2.setText("長按刪除全部");
                 if(temp.equals("")){
                     delchar_temp = del_char(number);
                     number = delchar_temp[0];
@@ -195,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 display.setText(String.format("%s%s%s", showNumber, temp2, temp));
-                display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
+                //display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
                 break;
             case R.id.zero: // 0
                 if (temp.equals("#")) { //如果是變數沒有使用過
@@ -253,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (temp.substring(temp.length() - 1).equals("n"))
                                 showNumber = temp.substring(0, temp.length() - 1);
                             display.setText(showNumber);
-                            display2.setText(temp);
+                            //display2.setText(temp);
                             number = "";
                             show_temp = "";
                             temp2 = "";
@@ -307,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        while(num.contains("×")) {
+        while(num.contains("×|")) {
             for (int i = 0; i < num.size(); i++) {
                 if (num.get(i).equals("×")) {
                     num.set(i - 1, operatormulti(num.get(i - 1).toString(), num.get(i + 1).toString()));
@@ -420,9 +423,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (str.contains(")"))
                 str = str.replace(")", ",),");
             if (str.contains(",")) {
-
                 temp = str.split(",");
-
                 ArrayList<String> num = new ArrayList<String>(Arrays.asList(temp));
                 two_number[1] = num.get(num.size() - 1);
                 num.remove(num.size() - 1);
@@ -430,17 +431,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     str_temp += s;
                 }
                 two_number[0] = str_temp;
+                return two_number;
+            } else {
+                two_number[0] = "0";
+                two_number[1] = "0";
+                return two_number;
             }
-            return two_number;
         } else {
-            two_number[1] = "";
             two_number[0] = "0";
+            two_number[1] = "0";
             return two_number;
         }
     }
-
-
-
     public void button_operator(String operator) {
         if(temp2.equals("(-")){
             number += temp2;
@@ -471,6 +473,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void button_number(String num){
         int number_counter = 0;
+        if(showNumber.equals("0"))
+            showNumber = "";
         display2.setText("");
         if (!temp.equals("")){
             switch (temp.substring(temp.length()-1)){
@@ -505,7 +509,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temp += num;
         temp += "n";
         show_temp += num;
-        number_counter += 1;
+
         showNumber();
     }
     public void showNumber(){
@@ -514,27 +518,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(offset>display.getLineHeight()){
             display.scrollTo(0, offset-display.getHeight());
         }
-        display2.setText(String.format("%s%s%s", number, temp2, temp));
+        /*display2.setText(String.format("%s%s%s", number, temp2, temp));
         display3.setText(String.format("number:%s", number));
         display4.setText(String.format("temp:%s", temp));
         display5.setText(String.format("show_temp:%s[temp2:%s]", show_temp, temp2));
-        display6.setText(String.format("show:%s", showNumber));
+        display6.setText(String.format("show:%s", showNumber));*/
     }
     public String del_shownumber(String str) {
         if(!str.equals("")){
             str = str.substring(0, str.length() - 1);
+            if(str.equals(""))
+                str = "0";
             return str;
         }
-        return str;
+        return "0";
     }
     public String del_number(String str) {
         if(!str.equals("")){
             switch (str.substring(str.length()-1)){
                 case "n":
                     str = str.substring(0, str.length() - 2);
-                    /*if(str.length() == 0){
-                        break;
-                    }*/
                     if(str.length()!=0){
                         if (!str.substring((str.length() - 1)).equals("o")) {
                             str += "n";
@@ -560,7 +563,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             return str;
         }
-        return "";
+        return "0";
     }
     public void temp_to_number() {
         if (!temp.equals("#")) {
@@ -604,10 +607,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         display = (TextView) findViewById(R.id.display);
         display2 = (TextView) findViewById(R.id.display2);
-        display3 = (TextView) findViewById(R.id.display3);
+        /*display3 = (TextView) findViewById(R.id.display3);
         display4 = (TextView) findViewById(R.id.display4);
         display5 = (TextView) findViewById(R.id.display5);
-        display6 = (TextView) findViewById(R.id.display6);
+        display6 = (TextView) findViewById(R.id.display6);*/
 
 
         clean.setOnClickListener(this);
@@ -633,6 +636,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clean.setOnLongClickListener(this);
         display.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
-
-
 }
